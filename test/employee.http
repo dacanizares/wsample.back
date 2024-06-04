@@ -1,8 +1,16 @@
 @URL = http://localhost:3000
 @contentType = application/json
 
-###
 
+#
+# Get all OK
+#
+GET {{URL}}/employee HTTP/1.1
+
+
+#
+# Create OK
+#
 POST {{URL}}/employee HTTP/1.1
 content-type: {{contentType}}
 
@@ -15,8 +23,9 @@ content-type: {{contentType}}
     "avatarUrl": null
 }
 
-###
-
+#
+# Create overpost FAILS
+#
 POST {{URL}}/employee HTTP/1.1
 content-type: {{contentType}}
 
@@ -26,8 +35,9 @@ content-type: {{contentType}}
     "EXTRA": "SHOULD FAIL"
 }
 
-###
-
+#
+# Create overpost and missing required FAILS
+#
 POST {{URL}}/employee HTTP/1.1
 content-type: {{contentType}}
 
@@ -37,8 +47,9 @@ content-type: {{contentType}}
 }
 
 
-###
-
+#
+# Togglestatus 1 OK
+#
 POST {{URL}}/employee/togglestatus HTTP/1.1
 content-type: {{contentType}}
 
@@ -47,8 +58,9 @@ content-type: {{contentType}}
     "active": 1
 }
 
-###
-
+#
+# Togglestatus 0 OK
+#
 POST {{URL}}/employee/togglestatus HTTP/1.1
 content-type: {{contentType}}
 
@@ -57,8 +69,9 @@ content-type: {{contentType}}
     "active": 0
 }
 
-###
-
+#
+# Update OK
+#
 PUT {{URL}}/employee HTTP/1.1
 content-type: {{contentType}}
 
@@ -73,8 +86,9 @@ content-type: {{contentType}}
 }
 
 
-###
-
+#
+# Delete OK
+#
 DELETE {{URL}}/employee HTTP/1.1
 content-type: {{contentType}}
 
