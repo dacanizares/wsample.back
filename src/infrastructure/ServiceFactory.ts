@@ -4,8 +4,10 @@ import EmployeeService from "../domain/services/EmployeeService";
 import IEmployeeService from "../domain/services/IEmployeeService";
 import DeparmentRepository from "../repositories/DepartmentRepository";
 import EmployeeRepository from "../repositories/EmployeeRepository";
+import HistoryService from "../domain/services/HistoryService";
+import HistoryRepository from "../repositories/HistoryRepository";
 
-type dependencies = 'IEmployeeService' | 'IDepartmentService'
+type dependencies = 'IEmployeeService' | 'IDepartmentService' | 'IHistoryService'
 
 function getDependecy<T>(type: dependencies): T {
   switch(type) {
@@ -18,6 +20,11 @@ function getDependecy<T>(type: dependencies): T {
     case 'IDepartmentService':
       return new DepartmentService(
         new DeparmentRepository
+      ) as T
+
+    case 'IHistoryService':
+      return new HistoryService(
+        new HistoryRepository
       ) as T
   }
 }
