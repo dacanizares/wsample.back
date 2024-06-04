@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 
 import migrateToLatest from "./infrastructure/Migrator";
 import employeeRoutes from "./routes/EmployeeRoutes";
+import departmentRoutes from "./routes/DepartmentRoutes";
 
 dotenv.config();
 migrateToLatest();
@@ -24,6 +25,7 @@ app.get("/", (_req: Request, res: Response) => {
 });
 
 app.use('/employee', employeeRoutes);
+app.use('/department', departmentRoutes);
 
 app.listen(port, () => {
   console.log(`[server]: Running at http://localhost:${port}`);
