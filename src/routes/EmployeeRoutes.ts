@@ -1,8 +1,10 @@
 import express, { Request, Response, NextFunction } from "express";
 import { createEmployee } from "../repositories/EmployeeRepository";
-import { NewEmployee } from "../domain/models/Employee";
+import { Employee, NewEmployee } from "../domain/models/Employee";
 import { CreateEmployee } from "../commands/EmployeeCommands";
 import validateModel from "../infrastructure/Validator";
+import { EmployeeViewModel } from "../viewModels/EmployeeViewModels";
+import MapTo from "../infrastructure/Mapper";
 
 const router = express.Router();
 
@@ -23,9 +25,11 @@ router.post('/', async (req: Request<{}, {}, CreateEmployee>, res: Response, nex
       const result = await createEmployee({
         active: 1,
         ...command,
-      } as NewEmployee)
-  
-      res.send(result);
+      } as NewEmployee);
+      
+      res.send(
+        MapTo<Employee, EmployeeViewModel>(result, new EmployeeViewModel())
+      );
     }    
   } catch (error) {
     console.log(`[server]: Path: "/". Body: "${req.body}"`);
@@ -34,3 +38,4 @@ router.post('/', async (req: Request<{}, {}, CreateEmployee>, res: Response, nex
 });
 
 export default router;
+
