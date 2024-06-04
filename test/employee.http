@@ -35,3 +35,33 @@ content-type: {{contentType}}
     "firstName": "Windom",
     "lastNameMissing!": "Earl Fails"
 }
+
+
+###
+
+POST {{URL}}/employee/togglestatus HTTP/1.1
+content-type: {{contentType}}
+
+{
+    "id": 1,
+    "active": 1
+}
+
+###
+
+POST {{URL}}/employee/togglestatus HTTP/1.1
+content-type: {{contentType}}
+
+{
+    "id": 1,
+    "active": 0
+}
+
+###
+
+DELETE {{URL}}/employee HTTP/1.1
+content-type: {{contentType}}
+
+{
+    "id": 2
+}
