@@ -1,17 +1,15 @@
 import express, { Request, Response, NextFunction } from "express";
 
 import { Employee } from "../domain/models/Employee";
-import { CreateEmployeeCommand, DeleteEmployeeCommand, ToggleEmployeeStatusCommand, UpdateEmployeeCommand, AddEmployeeToDepartmentCommand } from "../commands/EmployeeCommands";
-import validateModel from "../infrastructure/Validator";
+import { CreateEmployeeCommand, DeleteEmployeeCommand, UpdateEmployeeCommand } from "../commands/EmployeeCommands"; 
+import { ToggleEmployeeStatusCommand, AddEmployeeToDepartmentCommand } from "../commands/EmployeeCommands";
 import { EmployeeViewModel } from "../viewModels/EmployeeViewModels";
 import { MapTo, MapAllTo } from "../infrastructure/Mapper";
 
 import EmployeeQueries from "../queries/EmployeeQueries";
 import IEmployeeService from "../domain/services/IEmployeeService";
-import EmployeeRepository from "../repositories/EmployeeRepository";
-import IDepartmentService from "../domain/services/IDepartmentService";
-import DeparmentRepository from "../repositories/DepartmentRepository";
-import { getDependecy } from "../infrastructure/ServiceFactory";
+import getDependecy from "../infrastructure/ServiceFactory";
+import validateModel from "../infrastructure/Validator";
 
 const router = express.Router();
 

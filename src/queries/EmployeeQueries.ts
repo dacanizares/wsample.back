@@ -1,5 +1,5 @@
 import { db } from '../infrastructure/Database'
-import { Employee, NewEmployee, UpdatedEmployee, EMPLOYEE_TABLE } from '../domain/models/Employee'
+import { Employee, EMPLOYEE_TABLE } from '../domain/models/Employee'
 
 
 const EmployeeQueries = {
