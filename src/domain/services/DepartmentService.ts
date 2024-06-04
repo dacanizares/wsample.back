@@ -1,8 +1,9 @@
 import { Department } from "../models/Department";
 import IDepartmentRepository from "../repositoryInterfaces/IDepartmentRepository";
+import IDepartmentService from "./IDepartmentService";
 
 
-class DepartmentService {
+class DepartmentService implements IDepartmentService {
   Repository: IDepartmentRepository;
 
   constructor(repository: IDepartmentRepository) {

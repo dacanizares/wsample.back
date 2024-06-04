@@ -1,11 +1,13 @@
+
 import { AddEmployeeToDepartmentCommand, CreateEmployeeCommand, DeleteEmployeeCommand, ToggleEmployeeStatusCommand, UpdateEmployeeCommand } from "../../commands/EmployeeCommands";
 import { MapEmployeeFieldsForUpdate, MapToUpdatedEmployee } from "../../mappers/EmployeeMappers";
-import { NewEmployee, Employee } from "../models/Employee";
+import { NewEmployee,  Employee } from "../models/Employee";
 import IEmployeeRepository from "../repositoryInterfaces/IEmployeeRepository";
 import DepartmentService from "./DepartmentService";
+import IEmployeeService from "./IEmployeeService";
 
 
-class EmployeeService {
+class EmployeeService implements IEmployeeService {
   // Repository
   Repository: IEmployeeRepository;
   
