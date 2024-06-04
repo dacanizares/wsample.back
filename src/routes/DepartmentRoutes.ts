@@ -9,7 +9,9 @@ import { tryParseNumber } from "../mappers/BasicMapper";
 const router = express.Router();
 
 const departmentLog = (_req: Request, _res: Response, next: NextFunction) => {
-  console.log(`[server]: Accessing department route.`);
+  if (process.env.VERBOSE === "true") {
+    console.log(`[server]: Accessing department route.`);
+  }
   next();
 }
 

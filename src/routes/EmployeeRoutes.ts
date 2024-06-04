@@ -15,7 +15,9 @@ import { tryParseNumber } from "../mappers/BasicMapper";
 const router = express.Router();
 
 const employeeLog = (_req: Request, _res: Response, next: NextFunction) => {
-  console.log(`[server]: Accessing employee route.`);
+  if (process.env.VERBOSE === "true") {
+    console.log(`[server]: Accessing employee route.`);
+  }
   next();
 }
 
