@@ -5,6 +5,8 @@ import dotenv from "dotenv";
 
 import employeeRoutes from "./routes/EmployeeRoutes";
 import departmentRoutes from "./routes/DepartmentRoutes";
+import historyRoutes from "./routes/HistoryRoutes";
+import registerEventHandlers from "./domain/eventHandlers/RegisterEventHandlers";
 
 dotenv.config();
 
@@ -17,11 +19,15 @@ app.disable('x-powered-by');
 // Add body parsers
 app.use(bodyParser.json());
 
+// Register handlers
+registerEventHandlers();
+
 app.get("/", (_req: Request, res: Response) => {
   res.send("SEM Backend");
 });
 
 app.use('/employee', employeeRoutes);
 app.use('/department', departmentRoutes);
+app.use('/history', historyRoutes);
 
 export default app;
