@@ -2,6 +2,8 @@ import express, { Express, Request, Response } from "express";
 import helmet from "helmet";
 import dotenv from "dotenv";
 
+import migrateToLatest from "./infrastructure/Migrator";
+migrateToLatest();
 dotenv.config();
 
 const app: Express = express();
