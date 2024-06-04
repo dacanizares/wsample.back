@@ -1,4 +1,4 @@
-function MapTo<TSource extends object, TDestination extends object>(
+export function MapTo<TSource extends object, TDestination extends object>(
   source: TSource, type: { new(): TDestination; }): TDestination 
 {
   const destination = new type();
@@ -13,4 +13,14 @@ function MapTo<TSource extends object, TDestination extends object>(
   return destination;
 }
 
-export default MapTo;
+export function MapAllTo<TSource extends object, TDestination extends object>(
+  sourceList: TSource[], type: { new(): TDestination; }): TDestination[]
+{
+  const destinationList = new Array<TDestination>();
+  sourceList.forEach((value) => {
+    const mapped = MapTo<TSource, TDestination>(value, type);
+    destinationList.push(mapped);
+  });
+  return destinationList;
+}
+
