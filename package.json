@@ -6,6 +6,7 @@
   "scripts": {
     "build": "npx tsc",
     "run-build": "node public/index.js",
+    "delete-db": "rm .semsqlite.db",
     "start": "nodemon src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
