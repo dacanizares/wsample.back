@@ -9,7 +9,7 @@
     "migrate": "ts-node src/migrate.ts",
     "delete-db": "rm .semsqlite.db",
     "start": "nodemon src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run delete-db && npm run migrate && jest test/ --runInBand"
   },
   "author": "daniel.canizares",
   "license": "MIT",
