@@ -18,14 +18,14 @@ export async function up(db: Kysely<DatabaseDefinition>): Promise<void> {
   
   await db.schema
     .alterTable(EMPLOYEE_TABLE)
-    .addColumn('department_id', 'integer', (col) =>
+    .addColumn('departmentId', 'integer', (col) =>
       col.references('department.id').onDelete('restrict')
     )
     .execute();  
   await db.schema
-    .createIndex('employee_department_id_index')
+    .createIndex('employee_departmentId_index')
     .on(EMPLOYEE_TABLE)
-    .column('department_id')
+    .column('departmentId')
     .execute()
 
     // Seed data
@@ -54,7 +54,7 @@ export async function up(db: Kysely<DatabaseDefinition>): Promise<void> {
 export async function down(db: Kysely<DatabaseDefinition>): Promise<void> {
   await db.schema.dropTable(DEPARTMENT_TABLE).execute();
 
-  await db.schema.alterTable(EMPLOYEE_TABLE).dropIndex('employee_department_id_index').execute();
-  await db.schema.alterTable(EMPLOYEE_TABLE).dropColumn('department_id').execute();
+  await db.schema.alterTable(EMPLOYEE_TABLE).dropIndex('employee_departmentId_index').execute();
+  await db.schema.alterTable(EMPLOYEE_TABLE).dropColumn('departmentId').execute();
 }
 

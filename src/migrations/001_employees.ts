@@ -1,6 +1,6 @@
 import { Kysely, sql } from 'kysely'
 import { DatabaseDefinition } from '../infrastructure/Database';
-import { EMPLOYEE_TABLE } from '../domain/models/Employee';
+import { EMPLOYEE_TABLE, NewEmployee } from '../domain/models/Employee';
 
 export async function up(db: Kysely<DatabaseDefinition>): Promise<void> {
   await db.schema
@@ -20,6 +20,12 @@ export async function up(db: Kysely<DatabaseDefinition>): Promise<void> {
       col.defaultTo(sql`CURRENT_TIMESTAMP`).notNull()
     )
     .execute();
+
+    // Seed data
+    await db.insertInto(EMPLOYEE_TABLE)
+      .values({ "active": 1, "firstName": "Dale", "lastName": "Cooper" } as NewEmployee)
+      .returningAll()
+      .executeTakeFirstOrThrow();
 }
 
 export async function down(db: Kysely<DatabaseDefinition>): Promise<void> {
