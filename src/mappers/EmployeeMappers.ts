@@ -22,6 +22,7 @@ export function MapToUpdatedEmployee(employee: Employee): UpdatedEmployee {
   result.phone = employee.phone;
   result.address = employee.address;
   result.avatarUrl = employee.avatarUrl;
+  result.departmentId = employee.departmentId;
   result.modificationDate = mapNowForSqlite();
 
   return result;

@@ -10,8 +10,8 @@ export interface EmployeeTable {
   hireDate: ColumnType<Date | null, string | null, string | null>;
   phone: string | null;
   address: string | null;
-
   avatarUrl: string | null;
+  departmentId: number | null
   
   // ColumnType<SelectType, InsertType, UpdateType>
   creationDate: ColumnType<Date, string, never>;

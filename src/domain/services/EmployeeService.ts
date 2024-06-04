@@ -1,14 +1,20 @@
-import { CreateEmployeeCommand, DeleteEmployeeCommand, ToggleEmployeeStatusCommand, UpdateEmployeeCommand } from "../../commands/EmployeeCommands";
+import { AddEmployeeToDepartmentCommand, CreateEmployeeCommand, DeleteEmployeeCommand, ToggleEmployeeStatusCommand, UpdateEmployeeCommand } from "../../commands/EmployeeCommands";
 import { MapEmployeeFieldsForUpdate, MapToUpdatedEmployee } from "../../mappers/EmployeeMappers";
 import { NewEmployee, Employee } from "../models/Employee";
 import IEmployeeRepository from "../repositoryInterfaces/IEmployeeRepository";
+import DepartmentService from "./DepartmentService";
 
 
 class EmployeeService {
+  // Repository
   Repository: IEmployeeRepository;
+  
+  // Related services
+  DepartmentService: DepartmentService;
 
-  constructor(repository: IEmployeeRepository) {
+  constructor(repository: IEmployeeRepository, departmentService: DepartmentService) {
     this.Repository = repository;
+    this.DepartmentService = departmentService;
   }
 
   async createEmployee(command: CreateEmployeeCommand): Promise<Employee> {
@@ -22,7 +28,7 @@ class EmployeeService {
   }  
 
   async toggleEmployeeStatus(command: ToggleEmployeeStatusCommand): Promise<Employee | undefined> {
-    const storedEmployee = await this.Repository.findEmployeeForUpdateById(command.id);
+    const storedEmployee = await this.Repository.findEmployeeById(command.id);
     if (!storedEmployee) {
       return undefined;
     } else {
@@ -32,8 +38,23 @@ class EmployeeService {
     }
   }
 
+  async addEmployeeToDepartment(command: AddEmployeeToDepartmentCommand): Promise<Employee | undefined> {
+    const storedEmployee = await this.Repository.findEmployeeById(command.employeeId);
+    if (!storedEmployee) {
+      return undefined;
+    }
+    const storedDepartment = await this.DepartmentService.findDepartmentById(command.departmentId);
+    if (!storedDepartment) {
+      return undefined;
+    }
+
+    const updatedEmployee = MapToUpdatedEmployee(storedEmployee);
+    updatedEmployee.departmentId = command.departmentId;
+    return await this.Repository.updateEmployee(command.employeeId, updatedEmployee);
+  }
+
   async updateEmployee(command: UpdateEmployeeCommand): Promise<Employee | undefined> {
-    const storedEmployee = await this.Repository.findEmployeeForUpdateById(command.id);
+    const storedEmployee = await this.Repository.findEmployeeById(command.id);
     if (!storedEmployee) {
       return undefined;
     } else {

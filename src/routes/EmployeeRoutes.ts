@@ -1,13 +1,15 @@
 import express, { Request, Response, NextFunction } from "express";
 
 import { Employee } from "../domain/models/Employee";
-import { CreateEmployeeCommand, DeleteEmployeeCommand, ToggleEmployeeStatusCommand, UpdateEmployeeCommand } from "../commands/EmployeeCommands";
+import { CreateEmployeeCommand, DeleteEmployeeCommand, ToggleEmployeeStatusCommand, UpdateEmployeeCommand, AddEmployeeToDepartmentCommand } from "../commands/EmployeeCommands";
 import validateModel from "../infrastructure/Validator";
 import { EmployeeViewModel } from "../viewModels/EmployeeViewModels";
 import { MapTo, MapAllTo } from "../infrastructure/Mapper";
 import EmployeeService from "../domain/services/EmployeeService";
 import EmployeeRepository from "../repositories/EmployeeRepository";
 import EmployeeQueries from "../queries/EmployeeQueries";
+import DepartmentService from "../domain/services/DepartmentService";
+import DeparmentRepository from "../repositories/DepartmentRepository";
 
 const router = express.Router();
 
@@ -17,7 +19,7 @@ const employeeLog = (_req: Request, _res: Response, next: NextFunction) => {
 }
 
 const getEmployeeService = (): EmployeeService => (
-  new EmployeeService(new EmployeeRepository)
+  new EmployeeService(new EmployeeRepository, new DepartmentService(new DeparmentRepository))
 );
 
 router.use(employeeLog);
@@ -81,6 +83,33 @@ router.post('/togglestatus', async (req: Request<{}, {}, ToggleEmployeeStatusCom
         );
       } else {
         res.status(404).send(`Employee ${command.id} not found.`);
+      }
+    }
+  } catch (error) {
+    console.log(`[server]: Path: "/". Body: "${req.body}"`);
+    next(error);
+  }
+});
+
+//
+// POST: employee/addtodepartment
+//
+router.post('/addtodepartment', async (req: Request<{}, {}, AddEmployeeToDepartmentCommand>, res: Response, next: NextFunction) => {
+  try {
+    const [command, isValid, validationErrors] = validateModel<AddEmployeeToDepartmentCommand>(AddEmployeeToDepartmentCommand, req.body);
+    
+    if (!isValid) {
+      res.status(400).send(validationErrors);
+    } else {
+      const service = getEmployeeService();
+      const result = await service.addEmployeeToDepartment(command);
+      
+      if (result) {
+        res.send(
+          MapTo<Employee, EmployeeViewModel>(result, EmployeeViewModel)
+        );
+      } else {
+        res.status(404).send(`Employee ${command.employeeId} or Department ${command.departmentId} not found.`);
       }
     }
   } catch (error) {

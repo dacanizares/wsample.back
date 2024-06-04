@@ -1,6 +1,6 @@
 import { Employee } from "../domain/models/Employee";
 
-interface IEmployeeModifiableFields extends Omit<Employee, 'id' | 'active' | 'creationDate' | 'modificationDate' | 'hireDate'> { }
+interface IEmployeeModifiableFields extends Omit<Employee, 'id' | 'active' | 'creationDate' | 'modificationDate' | 'hireDate' | 'departmentId'> { }
 
 export class CreateEmployeeCommand implements IEmployeeModifiableFields {
   firstName: string = "";
@@ -16,6 +16,11 @@ export class ToggleEmployeeStatusCommand {
   active: number = -1;
 }
 
+export class AddEmployeeToDepartmentCommand {
+  employeeId: number = -1;
+  departmentId: number = -1;
+}
+
 export class UpdateEmployeeCommand implements IEmployeeModifiableFields {
   id: number = -1;
   firstName: string = "";
@@ -29,4 +34,3 @@ export class UpdateEmployeeCommand implements IEmployeeModifiableFields {
 export class DeleteEmployeeCommand {
   id: number = -1;
 }
-
