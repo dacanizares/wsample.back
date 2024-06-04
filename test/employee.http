@@ -7,7 +7,7 @@
 #
 GET {{URL}}/employee HTTP/1.1
 
-
+###
 #
 # Create OK
 #
@@ -23,6 +23,7 @@ content-type: {{contentType}}
     "avatarUrl": null
 }
 
+###
 #
 # Create overpost FAILS
 #
@@ -35,6 +36,7 @@ content-type: {{contentType}}
     "EXTRA": "SHOULD FAIL"
 }
 
+###
 #
 # Create overpost and missing required FAILS
 #
@@ -46,7 +48,7 @@ content-type: {{contentType}}
     "lastNameMissing!": "Earl Fails"
 }
 
-
+###
 #
 # Togglestatus 1 OK
 #
@@ -58,6 +60,7 @@ content-type: {{contentType}}
     "active": 1
 }
 
+###
 #
 # Togglestatus 0 OK
 #
@@ -69,6 +72,19 @@ content-type: {{contentType}}
     "active": 0
 }
 
+###
+#
+# AddToDepartment 1 OK
+#
+POST {{URL}}/employee/addtodepartment HTTP/1.1
+content-type: {{contentType}}
+
+{
+    "employeeId": 1,
+    "departmentId": 2
+}
+
+###
 #
 # Update OK
 #
@@ -85,7 +101,7 @@ content-type: {{contentType}}
     "avatarUrl": null
 }
 
-
+###
 #
 # Delete OK
 #
