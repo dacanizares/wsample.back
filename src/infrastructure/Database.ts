@@ -10,7 +10,7 @@ export interface DatabaseDefinition {
 }
 
 function openDb(): Database {
-  const db: Database = new DatabaseConstructor('semsqllite.db');
+  const db: Database = new DatabaseConstructor('.semsqlite.db');
   return db;
 }
 
