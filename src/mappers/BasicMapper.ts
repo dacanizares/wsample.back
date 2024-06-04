@@ -24,3 +24,12 @@ export function mapDateForSqlite(date: Date | null): string | null {
 export function mapNowForSqlite(): string | undefined {
   return mapDateForSqlite(new Date()) ?? undefined;
 }
+
+export function tryParseNumber(str: string) : number | null {
+  try {
+    return parseInt(str);
+  } catch (error) {
+    console.log(`[server]: error on tryParseNumber(${str}) => ${error}`);
+    return null;
+  }
+}

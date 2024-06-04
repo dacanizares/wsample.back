@@ -1,6 +1,6 @@
 import { UpdateEmployeeCommand } from "../commands/EmployeeCommands";
 import { Employee, UpdatedEmployee } from "../domain/models/Employee";
-import { mapDateForSqlite, mapNowForSqlite } from "./DateMapper";
+import { mapDateForSqlite, mapNowForSqlite } from "./BasicMapper";
 
 export function MapEmployeeFieldsForUpdate(command: UpdateEmployeeCommand, employee: UpdatedEmployee) {
   employee.firstName = command.firstName;
