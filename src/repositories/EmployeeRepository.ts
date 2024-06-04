@@ -4,13 +4,11 @@ import IEmployeeRepository from '../domain/repositoryInterfaces/IEmployeeReposit
 import { MapToUpdatedEmployee } from '../mappers/EmployeeMappers';
 
 class EmployeeRepository implements IEmployeeRepository {
-  async findEmployeeForUpdateById(id: number) : Promise<UpdatedEmployee | null> {
-    const employee = await db.selectFrom(EMPLOYEE_TABLE)
+  async findEmployeeForUpdateById(id: number) : Promise<Employee | undefined> {
+    return await db.selectFrom(EMPLOYEE_TABLE)
       .where('id', '=', id)
       .selectAll()
-      .executeTakeFirst();
-    
-    return MapToUpdatedEmployee(employee);    
+      .executeTakeFirst();  
   }
 
   async updateEmployee(id: number, employee: UpdatedEmployee): Promise<Employee> {

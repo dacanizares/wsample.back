@@ -1,5 +1,5 @@
 import { CreateEmployeeCommand, DeleteEmployeeCommand, ToggleEmployeeStatusCommand, UpdateEmployeeCommand } from "../../commands/EmployeeCommands";
-import { MapEmployeeFieldsForUpdate } from "../../mappers/EmployeeMappers";
+import { MapEmployeeFieldsForUpdate, MapToUpdatedEmployee } from "../../mappers/EmployeeMappers";
 import { NewEmployee, Employee } from "../models/Employee";
 import IEmployeeRepository from "../repositoryInterfaces/IEmployeeRepository";
 
@@ -26,9 +26,9 @@ class EmployeeService {
     if (!storedEmployee) {
       return undefined;
     } else {
+      const updatedEmployee = MapToUpdatedEmployee(storedEmployee);
       storedEmployee.active = command.active;
-      storedEmployee.modificationDate = new Date().toISOString();
-      return await this.Repository.updateEmployee(command.id, storedEmployee);
+      return await this.Repository.updateEmployee(command.id, updatedEmployee);
     }
   }
 
@@ -37,8 +37,9 @@ class EmployeeService {
     if (!storedEmployee) {
       return undefined;
     } else {
-      MapEmployeeFieldsForUpdate(command, storedEmployee);
-      return await this.Repository.updateEmployee(command.id, storedEmployee); 
+      const updatedEmployee = MapToUpdatedEmployee(storedEmployee);
+      MapEmployeeFieldsForUpdate(command, updatedEmployee);
+      return await this.Repository.updateEmployee(command.id, updatedEmployee); 
     }
   }
   
