@@ -1,12 +1,15 @@
 import { EmployeeTable } from '../domain/models/Employee'
 import { DepartmentTable } from '../domain/models/Department';
+import { HistoryTable } from '../domain/models/History';
 import DatabaseConstructor, { Database } from 'better-sqlite3'
 import { Kysely, SqliteDialect } from 'kysely'
 
 
+
 export interface DatabaseDefinition {
   employee: EmployeeTable,
-  department: DepartmentTable
+  department: DepartmentTable,
+  history: HistoryTable
 }
 
 function openDb(): Database {
