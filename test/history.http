@@ -1,0 +1,8 @@
+@URL = http://localhost:3000
+@contentType = application/json
+
+###
+#
+# Get by employeeId OK
+#
+GET {{URL}}/history/1 HTTP/1.1
