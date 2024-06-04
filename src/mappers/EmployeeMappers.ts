@@ -1,5 +1,6 @@
 import { UpdateEmployeeCommand } from "../commands/EmployeeCommands";
 import { Employee, UpdatedEmployee } from "../domain/models/Employee";
+import { mapDateForSqlite, mapNowForSqlite } from "./DateMapper";
 
 export function MapEmployeeFieldsForUpdate(command: UpdateEmployeeCommand, employee: UpdatedEmployee) {
   employee.firstName = command.firstName;
@@ -8,7 +9,7 @@ export function MapEmployeeFieldsForUpdate(command: UpdateEmployeeCommand, emplo
   employee.phone = command.phone;
   employee.address = command.address;
   employee.avatarUrl = command.avatarUrl;
-  employee.modificationDate = new Date().toISOString();
+  employee.modificationDate = mapNowForSqlite();
 }
 
 export function MapToUpdatedEmployee(employee: Employee): UpdatedEmployee {
@@ -17,14 +18,11 @@ export function MapToUpdatedEmployee(employee: Employee): UpdatedEmployee {
   result.active = employee.active;
   result.firstName = employee.firstName;
   result.lastName = employee.lastName;
-  if (!(employee.hireDate instanceof Date)){
-    employee.hireDate = new Date(employee.hireDate as unknown as string);
-  }
-  result.hireDate = employee.hireDate?.toISOString();
+  result.hireDate = mapDateForSqlite(employee.hireDate);
   result.phone = employee.phone;
   result.address = employee.address;
   result.avatarUrl = employee.avatarUrl;
-  result.modificationDate = new Date().toISOString();
+  result.modificationDate = mapNowForSqlite();
 
   return result;
 }

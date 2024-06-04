@@ -66,7 +66,7 @@ content-type: {{contentType}}
     "id": 3,
     "firstName": "Dale",
     "lastName": "Cooper",
-    "hireDate": "2000-01-01T16:53:34.889Z",
+    "hireDate": "2020-01-01 11:30:00",
     "phone": null,
     "address": null,
     "avatarUrl": null
