@@ -27,7 +27,7 @@ class EmployeeService {
       return undefined;
     } else {
       const updatedEmployee = MapToUpdatedEmployee(storedEmployee);
-      storedEmployee.active = command.active;
+      updatedEmployee.active = command.active;
       return await this.Repository.updateEmployee(command.id, updatedEmployee);
     }
   }
