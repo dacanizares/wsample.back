@@ -28,7 +28,7 @@ router.post('/', async (req: Request<{}, {}, CreateEmployee>, res: Response, nex
       } as NewEmployee);
       
       res.send(
-        MapTo<Employee, EmployeeViewModel>(result, new EmployeeViewModel())
+        MapTo<Employee, EmployeeViewModel>(result, EmployeeViewModel)
       );
     }    
   } catch (error) {

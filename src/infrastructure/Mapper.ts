@@ -1,6 +1,7 @@
 function MapTo<TSource extends object, TDestination extends object>(
-  source: TSource, destination: TDestination): TDestination 
+  source: TSource, type: { new(): TDestination; }): TDestination 
 {
+  const destination = new type();
   type keysDestination = keyof TDestination;
 
   Object.entries(source).forEach(([key, value]) => {
