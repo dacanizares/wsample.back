@@ -2,14 +2,18 @@
   "name": "sem.backend",
   "version": "1.0.0",
   "description": "",
+  "main": "src/index.ts",
   "scripts": {
     "build": "npx tsc",
+    "run-build": "node public/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "daniel.canizares",
   "license": "MIT",
+  "dependencies": {
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+  },
   "devDependencies": {
     "@types/express": "^4.17.21",
     "@types/node": "^20.14.0",
