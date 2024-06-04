@@ -6,11 +6,12 @@ import dotenv from "dotenv";
 import migrateToLatest from "./infrastructure/Migrator";
 import employeeRoutes from "./routes/EmployeeRoutes";
 
-migrateToLatest();
 dotenv.config();
+migrateToLatest();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
+
 // Standard security measures
 app.use(helmet());
 app.disable('x-powered-by');
