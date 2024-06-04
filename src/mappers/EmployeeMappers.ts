@@ -11,16 +11,15 @@ export function MapEmployeeFieldsForUpdate(command: UpdateEmployeeCommand, emplo
   employee.modificationDate = new Date().toISOString();
 }
 
-export function MapToUpdatedEmployee(employee?: Employee): UpdatedEmployee | null {
-  if (!employee) {
-    return null;
-  }
-
+export function MapToUpdatedEmployee(employee: Employee): UpdatedEmployee {
   const result = {} as UpdatedEmployee;
   result.id = employee.id;
   result.active = employee.active;
   result.firstName = employee.firstName;
   result.lastName = employee.lastName;
+  if (!(employee.hireDate instanceof Date)){
+    employee.hireDate = new Date(employee.hireDate as unknown as string);
+  }
   result.hireDate = employee.hireDate?.toISOString();
   result.phone = employee.phone;
   result.address = employee.address;
