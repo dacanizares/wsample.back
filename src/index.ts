@@ -8,7 +8,6 @@ import employeeRoutes from "./routes/EmployeeRoutes";
 import departmentRoutes from "./routes/DepartmentRoutes";
 
 dotenv.config();
-migrateToLatest();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
