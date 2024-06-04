@@ -59,6 +59,22 @@ content-type: {{contentType}}
 
 ###
 
+PUT {{URL}}/employee HTTP/1.1
+content-type: {{contentType}}
+
+{
+    "id": 3,
+    "firstName": "Dale",
+    "lastName": "Cooper",
+    "hireDate": "2000-01-01T16:53:34.889Z",
+    "phone": null,
+    "address": null,
+    "avatarUrl": null
+}
+
+
+###
+
 DELETE {{URL}}/employee HTTP/1.1
 content-type: {{contentType}}
 

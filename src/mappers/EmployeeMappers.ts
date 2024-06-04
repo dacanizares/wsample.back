@@ -1,4 +1,15 @@
+import { UpdateEmployeeCommand } from "../commands/EmployeeCommands";
 import { Employee, UpdatedEmployee } from "../domain/models/Employee";
+
+export function MapEmployeeFieldsForUpdate(command: UpdateEmployeeCommand, employee: UpdatedEmployee) {
+  employee.firstName = command.firstName;
+  employee.lastName = command.lastName;
+  employee.hireDate = command.hireDate;
+  employee.phone = command.phone;
+  employee.address = command.address;
+  employee.avatarUrl = command.avatarUrl;
+  employee.modificationDate = new Date().toISOString();
+}
 
 export function MapToUpdatedEmployee(employee?: Employee): UpdatedEmployee | null {
   if (!employee) {

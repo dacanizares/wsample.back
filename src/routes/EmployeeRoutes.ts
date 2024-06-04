@@ -1,11 +1,11 @@
 import express, { Request, Response, NextFunction } from "express";
 
-import { Employee, NewEmployee } from "../domain/models/Employee";
-import { CreateEmployee, DeleteEmployee, ToggleEmployeeStatus } from "../commands/EmployeeCommands";
+import { Employee } from "../domain/models/Employee";
+import { CreateEmployeeCommand, DeleteEmployeeCommand, ToggleEmployeeStatusCommand, UpdateEmployeeCommand } from "../commands/EmployeeCommands";
 import validateModel from "../infrastructure/Validator";
 import { EmployeeViewModel } from "../viewModels/EmployeeViewModels";
 import MapTo from "../infrastructure/Mapper";
-import EmployeeService from "../domain/services/employeeService";
+import EmployeeService from "../domain/services/EmployeeService";
 import EmployeeRepository from "../repositories/EmployeeRepository";
 
 const router = express.Router();
@@ -24,9 +24,9 @@ router.use(employeeLog);
 //
 // POST: employee/
 //
-router.post('/', async (req: Request<{}, {}, CreateEmployee>, res: Response, next: NextFunction) => {
+router.post('/', async (req: Request<{}, {}, CreateEmployeeCommand>, res: Response, next: NextFunction) => {
   try {
-    const [command, isValid, validationErrors] = validateModel<CreateEmployee>(CreateEmployee, req.body);
+    const [command, isValid, validationErrors] = validateModel<CreateEmployeeCommand>(CreateEmployeeCommand, req.body);
     
     if (!isValid) {
       res.status(400).send(validationErrors);
@@ -47,9 +47,9 @@ router.post('/', async (req: Request<{}, {}, CreateEmployee>, res: Response, nex
 //
 // POST: employee/togglestatus
 //
-router.post('/togglestatus', async (req: Request<{}, {}, ToggleEmployeeStatus>, res: Response, next: NextFunction) => {
+router.post('/togglestatus', async (req: Request<{}, {}, ToggleEmployeeStatusCommand>, res: Response, next: NextFunction) => {
   try {
-    const [command, isValid, validationErrors] = validateModel<ToggleEmployeeStatus>(ToggleEmployeeStatus, req.body);
+    const [command, isValid, validationErrors] = validateModel<ToggleEmployeeStatusCommand>(ToggleEmployeeStatusCommand, req.body);
     
     if (!isValid) {
       res.status(400).send(validationErrors);
@@ -57,9 +57,40 @@ router.post('/togglestatus', async (req: Request<{}, {}, ToggleEmployeeStatus>, 
       const service = getEmployeeService();
       const result = await service.toggleEmployeeStatus(command);
       
-      res.send(
-        MapTo<Employee, EmployeeViewModel>(result, EmployeeViewModel)
-      );
+      if (result) {
+        res.send(
+          MapTo<Employee, EmployeeViewModel>(result, EmployeeViewModel)
+        );
+      } else {
+        res.status(404).send(`Employee ${command.id} not found.`);
+      }
+    }
+  } catch (error) {
+    console.log(`[server]: Path: "/". Body: "${req.body}"`);
+    next(error);
+  }
+});
+
+//
+// PUT: employee/
+//
+router.put('/', async (req: Request<{}, {}, UpdateEmployeeCommand>, res: Response, next: NextFunction) => {
+  try {
+    const [command, isValid, validationErrors] = validateModel<UpdateEmployeeCommand>(UpdateEmployeeCommand, req.body);
+    
+    if (!isValid) {
+      res.status(400).send(validationErrors);
+    } else {
+      const service = getEmployeeService();
+      const result = await service.updateEmployee(command);
+      
+      if (result) {
+        res.send(
+          MapTo<Employee, EmployeeViewModel>(result, EmployeeViewModel)
+        );
+      } else {
+        res.status(404).send(`Employee ${command.id} not found.`);
+      }
     }
   } catch (error) {
     console.log(`[server]: Path: "/". Body: "${req.body}"`);
@@ -70,9 +101,9 @@ router.post('/togglestatus', async (req: Request<{}, {}, ToggleEmployeeStatus>, 
 //
 // DELETE: employee/
 //
-router.delete('/', async (req: Request<{}, {}, DeleteEmployee>, res: Response, next: NextFunction) => {
+router.delete('/', async (req: Request<{}, {}, DeleteEmployeeCommand>, res: Response, next: NextFunction) => {
   try {
-    const [command, isValid, validationErrors] = validateModel<DeleteEmployee>(DeleteEmployee, req.body);
+    const [command, isValid, validationErrors] = validateModel<DeleteEmployeeCommand>(DeleteEmployeeCommand, req.body);
     
     if (!isValid) {
       res.status(400).send(validationErrors);

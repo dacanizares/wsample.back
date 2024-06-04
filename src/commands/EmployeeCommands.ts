@@ -1,22 +1,32 @@
 import { Employee } from "../domain/models/Employee";
 
-interface IEmployeeModifiableFields extends Omit<Employee, 'id' | 'active' | 'creationDate' | 'modificationDate'> { }
+interface IEmployeeModifiableFields extends Omit<Employee, 'id' | 'active' | 'creationDate' | 'modificationDate' | 'hireDate'> { }
 
-export class CreateEmployee implements IEmployeeModifiableFields {
+export class CreateEmployeeCommand implements IEmployeeModifiableFields {
   firstName: string = "";
   lastName: string = "";
-  hireDate: Date | null = null;
+  hireDate: string | null = null;
   phone: string | null = null;
   address: string | null = null;
   avatarUrl: string | null = null;
 }
 
-export class ToggleEmployeeStatus {
+export class ToggleEmployeeStatusCommand {
   id: number = -1;
   active: number = -1;
 }
 
-export class DeleteEmployee {
+export class UpdateEmployeeCommand implements IEmployeeModifiableFields {
+  id: number = -1;
+  firstName: string = "";
+  lastName: string = "";
+  hireDate: string | null = null;
+  phone: string | null = null;
+  address: string | null = null;
+  avatarUrl: string | null = null;
+}
+
+export class DeleteEmployeeCommand {
   id: number = -1;
 }
 
