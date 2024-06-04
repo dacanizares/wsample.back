@@ -6,3 +6,9 @@
 # Get all OK
 #
 GET {{URL}}/department HTTP/1.1
+
+###
+#
+# Get by id OK
+#
+GET {{URL}}/department/2 HTTP/1.1
