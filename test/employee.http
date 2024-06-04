@@ -1,0 +1,37 @@
+@URL = http://localhost:3000
+@contentType = application/json
+
+###
+
+POST {{URL}}/employee HTTP/1.1
+content-type: {{contentType}}
+
+{
+    "firstName": "Windom",
+    "lastName": "Earl",
+    "hireDate": null,
+    "phone": null,
+    "address": null,
+    "avatarUrl": null
+}
+
+###
+
+POST {{URL}}/employee HTTP/1.1
+content-type: {{contentType}}
+
+{
+    "firstName": "Windom",
+    "lastName": "Earl",
+    "EXTRA": "SHOULD FAIL"
+}
+
+###
+
+POST {{URL}}/employee HTTP/1.1
+content-type: {{contentType}}
+
+{
+    "firstName": "Windom",
+    "lastNameMissing!": "Earl Fails"
+}
