@@ -5,11 +5,13 @@ import { CreateEmployeeCommand, DeleteEmployeeCommand, ToggleEmployeeStatusComma
 import validateModel from "../infrastructure/Validator";
 import { EmployeeViewModel } from "../viewModels/EmployeeViewModels";
 import { MapTo, MapAllTo } from "../infrastructure/Mapper";
-import EmployeeService from "../domain/services/EmployeeService";
-import EmployeeRepository from "../repositories/EmployeeRepository";
+
 import EmployeeQueries from "../queries/EmployeeQueries";
-import DepartmentService from "../domain/services/DepartmentService";
+import IEmployeeService from "../domain/services/IEmployeeService";
+import EmployeeRepository from "../repositories/EmployeeRepository";
+import IDepartmentService from "../domain/services/IDepartmentService";
 import DeparmentRepository from "../repositories/DepartmentRepository";
+import { getDependecy } from "../infrastructure/ServiceFactory";
 
 const router = express.Router();
 
@@ -17,10 +19,6 @@ const employeeLog = (_req: Request, _res: Response, next: NextFunction) => {
   console.log(`[server]: Accessing employee route.`);
   next();
 }
-
-const getEmployeeService = (): EmployeeService => (
-  new EmployeeService(new EmployeeRepository, new DepartmentService(new DeparmentRepository))
-);
 
 router.use(employeeLog);
 
@@ -51,7 +49,7 @@ router.post('/', async (req: Request<{}, {}, CreateEmployeeCommand>, res: Respon
     if (!isValid) {
       res.status(400).send(validationErrors);
     } else {
-      const service = getEmployeeService();
+      const service = getDependecy<IEmployeeService>('IEmployeeService');
       const result = await service.createEmployee(command);
       
       res.send(
@@ -74,7 +72,7 @@ router.post('/togglestatus', async (req: Request<{}, {}, ToggleEmployeeStatusCom
     if (!isValid) {
       res.status(400).send(validationErrors);
     } else {
-      const service = getEmployeeService();
+      const service = getDependecy<IEmployeeService>('IEmployeeService');
       const result = await service.toggleEmployeeStatus(command);
       
       if (result) {
@@ -101,7 +99,7 @@ router.post('/addtodepartment', async (req: Request<{}, {}, AddEmployeeToDepartm
     if (!isValid) {
       res.status(400).send(validationErrors);
     } else {
-      const service = getEmployeeService();
+      const service = getDependecy<IEmployeeService>('IEmployeeService');
       const result = await service.addEmployeeToDepartment(command);
       
       if (result) {
@@ -128,7 +126,7 @@ router.put('/', async (req: Request<{}, {}, UpdateEmployeeCommand>, res: Respons
     if (!isValid) {
       res.status(400).send(validationErrors);
     } else {
-      const service = getEmployeeService();
+      const service = getDependecy<IEmployeeService>('IEmployeeService');
       const result = await service.updateEmployee(command);
       
       if (result) {
@@ -155,7 +153,7 @@ router.delete('/', async (req: Request<{}, {}, DeleteEmployeeCommand>, res: Resp
     if (!isValid) {
       res.status(400).send(validationErrors);
     } else {
-      const service = getEmployeeService();
+      const service = getDependecy<IEmployeeService>('IEmployeeService');
       const result = await service.deleteEmployee(command);
       
       if (result) {

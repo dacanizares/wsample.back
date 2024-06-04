@@ -3,7 +3,7 @@ import { AddEmployeeToDepartmentCommand, CreateEmployeeCommand, DeleteEmployeeCo
 import { MapEmployeeFieldsForUpdate, MapToUpdatedEmployee } from "../../mappers/EmployeeMappers";
 import { NewEmployee,  Employee } from "../models/Employee";
 import IEmployeeRepository from "../repositoryInterfaces/IEmployeeRepository";
-import DepartmentService from "./DepartmentService";
+import IDepartmentService from "./IDepartmentService";
 import IEmployeeService from "./IEmployeeService";
 
 
@@ -12,9 +12,9 @@ class EmployeeService implements IEmployeeService {
   Repository: IEmployeeRepository;
   
   // Related services
-  DepartmentService: DepartmentService;
+  DepartmentService: IDepartmentService;
 
-  constructor(repository: IEmployeeRepository, departmentService: DepartmentService) {
+  constructor(repository: IEmployeeRepository, departmentService: IDepartmentService) {
     this.Repository = repository;
     this.DepartmentService = departmentService;
   }
