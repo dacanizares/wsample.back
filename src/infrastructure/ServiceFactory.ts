@@ -7,7 +7,7 @@ import EmployeeRepository from "../repositories/EmployeeRepository";
 
 type dependencies = 'IEmployeeService' | 'IDepartmentService'
 
-export function getDependecy<T>(type: dependencies): T {
+function getDependecy<T>(type: dependencies): T {
   switch(type) {
     case 'IEmployeeService':
       return new EmployeeService(
@@ -21,3 +21,5 @@ export function getDependecy<T>(type: dependencies): T {
       ) as T
   }
 }
+
+export default getDependecy;
