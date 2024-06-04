@@ -21,18 +21,3 @@ export interface EmployeeTable {
 export type Employee = Selectable<EmployeeTable>
 export type NewEmployee = Insertable<EmployeeTable>
 export type UpdatedEmployee = Updateable<EmployeeTable>
-
-export function MapToUpdatedEmployee(employee: Employee) {
-  const result = {} as UpdatedEmployee;
-  result.id = employee.id;
-  result.active = employee.active;
-  result.firstName = employee.firstName;
-  result.lastName = employee.lastName;
-  result.hireDate = employee.hireDate?.toISOString();
-  result.phone = employee.phone;
-  result.address = employee.address;
-  result.avatarUrl = employee.avatarUrl;
-  result.modificationDate = new Date().toISOString();
-
-  return result;
-}

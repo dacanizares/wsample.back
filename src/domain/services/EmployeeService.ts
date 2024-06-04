@@ -1,6 +1,6 @@
 import { CreateEmployee, DeleteEmployee, ToggleEmployeeStatus } from "../../commands/EmployeeCommands";
 import MapTo from "../../infrastructure/Mapper";
-import { NewEmployee, UpdatedEmployee, Employee, MapToUpdatedEmployee } from "../models/Employee";
+import { NewEmployee, UpdatedEmployee, Employee } from "../models/Employee";
 import IEmployeeRepository from "../repositoryInterfaces/IEmployeeRepository";
 
 
@@ -22,14 +22,13 @@ class EmployeeService {
   }  
 
   async toggleEmployeeStatus(command: ToggleEmployeeStatus): Promise<Employee> {
-    const storedEmployee = await this.Repository.findEmployeeById(command.id);
+    const storedEmployee = await this.Repository.findEmployeeForUpdateById(command.id);
     if (!storedEmployee) {
       throw Error(`Employee ${command.id} does not exist.`)
     } else {
       storedEmployee.active = command.active;
-
-      const updatedEmployee = MapToUpdatedEmployee(storedEmployee);
-      return await this.Repository.updateEmployee(command.id, updatedEmployee);
+      storedEmployee.modificationDate = new Date().toISOString();
+      return await this.Repository.updateEmployee(command.id, storedEmployee);
     }
   }
   
