@@ -10,6 +10,7 @@ import EmployeeQueries from "../queries/EmployeeQueries";
 import IEmployeeService from "../domain/services/IEmployeeService";
 import getDependecy from "../infrastructure/ServiceFactory";
 import validateModel from "../infrastructure/Validator";
+import { tryParseNumber } from "../mappers/BasicMapper";
 
 const router = express.Router();
 
@@ -30,6 +31,32 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
     res.send(
       MapAllTo<Employee, EmployeeViewModel>(result, EmployeeViewModel)
     );
+  } catch (error) {
+    console.log(`[server]: Path: "/". Body: "${req.body}"`);
+    next(error);
+  }
+});
+
+
+//
+// GET: department/:id
+//
+router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const id = tryParseNumber(req.params['id']);
+    if (!id) {
+      res.status(400).send('id is not a number');
+    } else {
+      const result = await EmployeeQueries.findEmployeeById(id);
+      
+      if (result) {
+        res.send(
+          MapTo<Employee, EmployeeViewModel>(result, EmployeeViewModel)
+        );
+      } else {
+        res.status(404).send(`Employee ${id} not found.`);
+      }
+    }
   } catch (error) {
     console.log(`[server]: Path: "/". Body: "${req.body}"`);
     next(error);

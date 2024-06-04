@@ -7,6 +7,13 @@
 #
 GET {{URL}}/employee HTTP/1.1
 
+
+###
+#
+# Get by id OK
+#
+GET {{URL}}/employee/1 HTTP/1.1
+
 ###
 #
 # Create OK
