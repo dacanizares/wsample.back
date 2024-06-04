@@ -2,5 +2,5 @@
 
 ## Recommended VSCode extensions
 
-* [SQLTools SQLite](https://open-vsx.org/vscode/item?itemName=mtxr.sqltools-driver-sqlite)
+* [SQLite Viewer](https://open-vsx.org/vscode/item?itemName=qwtel.sqlite-viewer)
 * [REST Client](https://open-vsx.org/vscode/item?itemName=humao.rest-client)
