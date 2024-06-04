@@ -4,9 +4,10 @@ import { Employee } from "../domain/models/Employee";
 import { CreateEmployeeCommand, DeleteEmployeeCommand, ToggleEmployeeStatusCommand, UpdateEmployeeCommand } from "../commands/EmployeeCommands";
 import validateModel from "../infrastructure/Validator";
 import { EmployeeViewModel } from "../viewModels/EmployeeViewModels";
-import MapTo from "../infrastructure/Mapper";
+import { MapTo, MapAllTo } from "../infrastructure/Mapper";
 import EmployeeService from "../domain/services/EmployeeService";
 import EmployeeRepository from "../repositories/EmployeeRepository";
+import EmployeeQueries from "../queries/EmployeeQueries";
 
 const router = express.Router();
 
@@ -20,6 +21,23 @@ const getEmployeeService = (): EmployeeService => (
 );
 
 router.use(employeeLog);
+
+//
+// GET: employee/
+//
+router.get('/', async (req: Request, res: Response, next: NextFunction) => {
+  try {    
+    const result = await EmployeeQueries.findEmployees();
+    
+    res.send(
+      MapAllTo<Employee, EmployeeViewModel>(result, EmployeeViewModel)
+    );
+  } catch (error) {
+    console.log(`[server]: Path: "/". Body: "${req.body}"`);
+    next(error);
+  }
+});
+
 
 //
 // POST: employee/
