@@ -8,10 +8,10 @@ export async function up(db: Kysely<DatabaseDefinition>): Promise<void> {
     .createTable(DEPARTMENT_TABLE)
     .addColumn('id', 'integer', (col) => col.primaryKey())
     .addColumn('name', 'text', (col) => col.notNull())
-    .addColumn('creationDate', 'text', (col) =>
+    .addColumn('creationDate', 'timestamp', (col) =>
       col.defaultTo(sql`CURRENT_TIMESTAMP`).notNull()
     )
-    .addColumn('modificationDate', 'text', (col) =>
+    .addColumn('modificationDate', 'timestamp', (col) =>
       col.defaultTo(sql`CURRENT_TIMESTAMP`).notNull()
     )
     .execute();

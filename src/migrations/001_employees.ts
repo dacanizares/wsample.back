@@ -9,14 +9,14 @@ export async function up(db: Kysely<DatabaseDefinition>): Promise<void> {
     .addColumn('active', 'integer', (col) => col.notNull())
     .addColumn('firstName', 'text', (col) => col.notNull())
     .addColumn('lastName', 'text', (col) => col.notNull())
-    .addColumn('hireDate', 'text')
+    .addColumn('hireDate', 'timestamp')
     .addColumn('phone', 'text')
     .addColumn('address', 'text')
     .addColumn('avatarUrl', 'text')
-    .addColumn('creationDate', 'text', (col) =>
+    .addColumn('creationDate', 'timestamp', (col) =>
       col.defaultTo(sql`CURRENT_TIMESTAMP`).notNull()
     )
-    .addColumn('modificationDate', 'text', (col) =>
+    .addColumn('modificationDate', 'timestamp', (col) =>
       col.defaultTo(sql`CURRENT_TIMESTAMP`).notNull()
     )
     .execute();
