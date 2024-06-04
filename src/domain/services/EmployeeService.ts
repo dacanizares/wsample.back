@@ -1,6 +1,7 @@
 
 import { AddEmployeeToDepartmentCommand, CreateEmployeeCommand, DeleteEmployeeCommand, ToggleEmployeeStatusCommand, UpdateEmployeeCommand } from "../../commands/EmployeeCommands";
 import { MapEmployeeFieldsForUpdate, MapToUpdatedEmployee } from "../../mappers/EmployeeMappers";
+import { OnAddedToDepartment, notifyToOnAddedToDepartment } from "../events/OnAddedToDepartment";
 import { NewEmployee,  Employee } from "../models/Employee";
 import IEmployeeRepository from "../repositoryInterfaces/IEmployeeRepository";
 import IDepartmentService from "./IDepartmentService";
@@ -45,6 +46,10 @@ class EmployeeService implements IEmployeeService {
     if (!storedEmployee) {
       return undefined;
     }
+    if (storedEmployee.departmentId === command.departmentId) {
+      return storedEmployee;
+    }
+
     const storedDepartment = await this.DepartmentService.findDepartmentById(command.departmentId);
     if (!storedDepartment) {
       return undefined;
@@ -52,7 +57,16 @@ class EmployeeService implements IEmployeeService {
 
     const updatedEmployee = MapToUpdatedEmployee(storedEmployee);
     updatedEmployee.departmentId = command.departmentId;
-    return await this.Repository.updateEmployee(command.employeeId, updatedEmployee);
+
+    const result = await this.Repository.updateEmployee(command.employeeId, updatedEmployee);
+    if (result) {
+      // Notify domain event
+      notifyToOnAddedToDepartment({
+        employeeId: command.employeeId,
+        departmentId: command.departmentId
+      } as OnAddedToDepartment);
+    }
+    return result;
   }
 
   async updateEmployee(command: UpdateEmployeeCommand): Promise<Employee | undefined> {
