@@ -15,37 +15,7 @@ router.use(employeeLog);
 
 router.post('/', async (req: Request<{}, {}, CreateEmployee>, res: Response, next: NextFunction) => {
   try {
-    const command = new CreateEmployee();
-    
-    type keys = keyof CreateEmployee;
-
-    let isValid = true;
-    const validationErrors: Array<string> = [];
-    const requiredKeys: Array<string> = [];
-    const addedKeys: Array<string> = [];
-
-    Object.entries(command).forEach(([key, value]) => {
-      if (value !== null) {
-        requiredKeys.push(key);
-      }
-    });
-    
-    Object.entries(req.body).forEach(([key,value]) => {
-      if (key in command) {
-        command[key as keys] = value;
-        addedKeys.push(key);
-      } else {
-        isValid = false;
-        validationErrors.push(`Body key ${key} is invalid`);
-      }
-    });
-
-    requiredKeys.forEach((key) => {
-      if (!addedKeys.includes(key)) {
-        validationErrors.push(`Body key ${key} is missing`);
-        isValid = false;
-      }
-    });    
+    const [command, isValid, validationErrors] = validateModel<CreateEmployee>(CreateEmployee, req.body);
     
     if (!isValid) {
       res.status(400).send(validationErrors);
