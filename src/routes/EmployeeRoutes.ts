@@ -29,10 +29,7 @@ router.use(employeeLog);
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   try {    
     const result = await EmployeeQueries.findEmployees();
-    
-    res.send(
-      MapAllTo<Employee, EmployeeViewModel>(result, EmployeeViewModel)
-    );
+    res.send(result);
   } catch (error) {
     console.log(`[server]: Path: "/". Body: "${req.body}"`);
     next(error);

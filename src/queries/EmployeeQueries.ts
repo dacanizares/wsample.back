@@ -1,5 +1,7 @@
 import { db } from '../infrastructure/Database'
 import { Employee, EMPLOYEE_TABLE } from '../domain/models/Employee'
+import { DEPARTMENT_TABLE } from '../domain/models/Department';
+import { EmployeeViewModel } from '../viewModels/EmployeeViewModels';
 
 
 const EmployeeQueries = {
@@ -10,9 +12,21 @@ const EmployeeQueries = {
       .executeTakeFirst();
   },
 
-  async findEmployees(): Promise<Array<Employee>> {
+  async findEmployees(): Promise<Array<EmployeeViewModel>> {
     return await db.selectFrom(EMPLOYEE_TABLE)
-      .selectAll()
+      .leftJoin(DEPARTMENT_TABLE, `${DEPARTMENT_TABLE}.id`, `${EMPLOYEE_TABLE}.departmentId`)
+      .select([
+        'employee.id as id',
+        'active',
+        'firstName',
+        'lastName',
+        'hireDate',
+        'phone',
+        'address',
+        'avatarUrl',
+        'departmentId',
+        'department.name as departmentName'
+      ])
       .execute();
   }
 }
