@@ -7,22 +7,21 @@ export function tryParseDate(date: string): Date | null {
   }
 }
 
-export function mapDateForSqlite(date: Date | null): string | null {
+export function mapDateForSqlite(date: Date | string | null, keepTime?: boolean): string | null {
   if (date && !(date instanceof Date)) {
-    console.log("[server]: warning Date stored as string. (blame kysely)");
     date = tryParseDate(date);
   }
-
-  if (date) {
-    const datePart = date.toISOString().split('T')[0];
-    const timePart = date.toTimeString().split(' ')[0];
-    return `${datePart} ${timePart}`;
+  const dateFixed = date as Date;
+  if (dateFixed) {
+    const datePart = dateFixed.toISOString().split('T')[0];
+    const timePart = dateFixed.toTimeString().split(' ')[0];
+    return keepTime ? `${datePart} ${timePart}` : datePart;
   }
   return null;  
 }
 
 export function mapNowForSqlite(): string | undefined {
-  return mapDateForSqlite(new Date()) ?? undefined;
+  return mapDateForSqlite(new Date(), true) ?? undefined;
 }
 
 export function tryParseNumber(str: string) : number | null {

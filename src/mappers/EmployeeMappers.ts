@@ -5,7 +5,7 @@ import { mapDateForSqlite, mapNowForSqlite } from "./BasicMapper";
 export function MapEmployeeFieldsForUpdate(command: UpdateEmployeeCommand, employee: UpdatedEmployee) {
   employee.firstName = command.firstName;
   employee.lastName = command.lastName;
-  employee.hireDate = command.hireDate;
+  employee.hireDate = mapDateForSqlite(command.hireDate);
   employee.phone = command.phone;
   employee.address = command.address;
   employee.avatarUrl = command.avatarUrl;
