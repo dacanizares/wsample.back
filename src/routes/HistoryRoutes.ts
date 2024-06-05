@@ -29,9 +29,7 @@ router.get('/:employeeId', async (req: Request, res: Response, next: NextFunctio
       const result = await HistoryQueries.findHistoryByEmployeeId(employeeId);
       
       if (result) {
-        res.send(
-          MapAllTo<History, HistoryViewModel>(result, HistoryViewModel)
-        );
+        res.send(result);
       } else {
         res.status(404).send(`History for employeeId ${employeeId} not found.`);
       }
