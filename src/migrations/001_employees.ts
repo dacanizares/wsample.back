@@ -27,6 +27,9 @@ export async function up(db: Kysely<DatabaseDefinition>): Promise<void> {
         "active": 1, 
         "firstName": "Dale", 
         "lastName": "Cooper",
+        "hireDate": "1990-01-21",
+        "phone": "911",
+        "address": "Twin Peaks",
         "avatarUrl": "https://upload.wikimedia.org/wikipedia/en/5/50/Agentdalecooper.jpg"
       } as NewEmployee)
       .returningAll()
@@ -36,6 +39,8 @@ export async function up(db: Kysely<DatabaseDefinition>): Promise<void> {
         "active": 1, 
         "firstName": "Windom", 
         "lastName": "Earl",
+        "phone": "999",
+        "address": "Black lodge",
         "avatarUrl": "https://www.twinpeaksblog.com/wp-content/uploads/2021/04/06_TPB_CostumeWindom_MauveZone_2014WindomTable.jpg" 
       } as NewEmployee)
       .returningAll()
@@ -45,6 +50,9 @@ export async function up(db: Kysely<DatabaseDefinition>): Promise<void> {
         "active": 1, 
         "firstName": "Shelly", 
         "lastName": "Johnson",
+        "hireDate": "1990-01-21",
+        "phone": "353-54-55",
+        "address": "RR",
         "avatarUrl": "https://upload.wikimedia.org/wikipedia/en/f/f8/Shelly_Johnson_in_Twin_Peaks.png" 
       } as NewEmployee)
       .returningAll()
@@ -54,6 +62,9 @@ export async function up(db: Kysely<DatabaseDefinition>): Promise<void> {
         "active": 1, 
         "firstName": "Warren", 
         "lastName": "Frost",
+        "hireDate": "1990-01-21",
+        "phone": "445-88-99",
+        "address": "Hospital",
         "avatarUrl": "https://upload.wikimedia.org/wikipedia/en/2/2e/Warren_Frost_Twin_Peaks_resize.jpg" 
       } as NewEmployee)
       .returningAll()
