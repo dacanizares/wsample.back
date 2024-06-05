@@ -1,4 +1,4 @@
-import { ColumnType, Generated, Insertable, Selectable, Updateable } from 'kysely';
+import { ColumnType, Generated, Insertable, Selectable } from 'kysely';
 
 export const HISTORY_TABLE = 'history';
 

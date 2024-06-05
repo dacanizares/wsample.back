@@ -4,7 +4,7 @@ import { Employee } from "../domain/models/Employee";
 import { CreateEmployeeCommand, DeleteEmployeeCommand, UpdateEmployeeCommand } from "../commands/EmployeeCommands"; 
 import { ToggleEmployeeStatusCommand, AddEmployeeToDepartmentCommand } from "../commands/EmployeeCommands";
 import { EmployeeViewModel } from "../viewModels/EmployeeViewModels";
-import { MapTo, MapAllTo } from "../infrastructure/Mapper";
+import { MapTo } from "../infrastructure/Mapper";
 
 import EmployeeQueries from "../queries/EmployeeQueries";
 import IEmployeeService from "../domain/services/IEmployeeService";

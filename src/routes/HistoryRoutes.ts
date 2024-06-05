@@ -1,8 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
 
-import { MapTo, MapAllTo } from "../infrastructure/Mapper";
-import { History } from "../domain/models/History";
-import { HistoryViewModel } from "../viewModels/HistoryViewModels";
 import HistoryQueries from "../queries/HistoryQueries";
 import { tryParseNumber } from "../mappers/BasicMapper";
 
