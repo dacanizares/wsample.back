@@ -5,18 +5,11 @@ import { EmployeeViewModel } from '../viewModels/EmployeeViewModels';
 
 
 const EmployeeQueries = {
-  async findEmployeeById(id: number): Promise<Employee | undefined> {
-    return await db.selectFrom(EMPLOYEE_TABLE)
-      .where('id', '=', id)
-      .selectAll()
-      .executeTakeFirst();
-  },
-
-  async findEmployees(): Promise<Array<EmployeeViewModel>> {
+  async findEmployeeById(id: number): Promise<EmployeeViewModel | undefined> {
     return await db.selectFrom(EMPLOYEE_TABLE)
       .leftJoin(DEPARTMENT_TABLE, `${DEPARTMENT_TABLE}.id`, `${EMPLOYEE_TABLE}.departmentId`)
       .select([
-        'employee.id as id',
+        `${EMPLOYEE_TABLE}.id as id`,
         'active',
         'firstName',
         'lastName',
@@ -25,7 +18,26 @@ const EmployeeQueries = {
         'address',
         'avatarUrl',
         'departmentId',
-        'department.name as departmentName'
+        `${DEPARTMENT_TABLE}.name as departmentName`
+      ])
+      .where(`${EMPLOYEE_TABLE}.id`, '=', id)
+      .executeTakeFirst();
+  },
+
+  async findEmployees(): Promise<Array<EmployeeViewModel>> {
+    return await db.selectFrom(EMPLOYEE_TABLE)
+      .leftJoin(DEPARTMENT_TABLE, `${DEPARTMENT_TABLE}.id`, `${EMPLOYEE_TABLE}.departmentId`)
+      .select([
+        `${EMPLOYEE_TABLE}.id as id`,
+        'active',
+        'firstName',
+        'lastName',
+        'hireDate',
+        'phone',
+        'address',
+        'avatarUrl',
+        'departmentId',
+        `${DEPARTMENT_TABLE}.name as departmentName`
       ])
       .execute();
   }

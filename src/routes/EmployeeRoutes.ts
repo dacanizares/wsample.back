@@ -49,9 +49,7 @@ router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
       const result = await EmployeeQueries.findEmployeeById(id);
       
       if (result) {
-        res.send(
-          MapTo<Employee, EmployeeViewModel>(result, EmployeeViewModel)
-        );
+        res.send(result);
       } else {
         res.status(404).send(`Employee ${id} not found.`);
       }
