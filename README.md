@@ -1,5 +1,7 @@
 # sem.backend
 
+![Diagram](.assets/diagram.png)
+
 ## Quick start
 
 1. Install dependencies.
