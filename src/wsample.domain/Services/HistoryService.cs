@@ -14,8 +14,6 @@ namespace wsample.domain.Services
 
         public async Task<int> CreateHistoryAsync(History newHistory)
         {
-            // TODO map fields
-
             return await _historyRepository.CreateHistoryAsync(newHistory);
         }
     }

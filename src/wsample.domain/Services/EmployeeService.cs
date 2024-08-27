@@ -55,7 +55,10 @@ namespace wsample.domain.Services
 
             storedEmployee.DepartmentId = departmentId;
             
-            var onAddedToDepartmentEvent = new OnAddedToDepartmentEvent { EmployeeId = employeeId, DepartmentId = departmentId };
+            var onAddedToDepartmentEvent = new OnAddedToDepartmentEvent { 
+                EmployeeId = employeeId,
+                DepartmentId = departmentId 
+            };
             await _mediator.Send(onAddedToDepartmentEvent);
 
             await _employeeRepository.UpdateEmployeeAsync(storedEmployee);

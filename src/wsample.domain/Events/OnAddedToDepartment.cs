@@ -19,7 +19,14 @@ namespace wsample.domain.Events
         }
         public async Task Handle(OnAddedToDepartmentEvent request, CancellationToken cancellationToken)
         {
-            await _historyService.CreateHistoryAsync(new Models.History { EmployeeId = request.EmployeeId, DepartmentId = request.DepartmentId });
+            await _historyService.CreateHistoryAsync(
+                new Models.History 
+                { 
+                    EmployeeId = request.EmployeeId,
+                    DepartmentId = request.DepartmentId,
+                    Date = DateTime.UtcNow
+                }
+            );
         }
     }
 }
