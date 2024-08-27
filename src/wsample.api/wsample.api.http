@@ -1,0 +1,90 @@
+@api.url = {{HostAddress}}
+
+
+GET {{api.url}}/Department
+Accept: application/json
+
+###
+
+GET {{api.url}}/Department/1
+Accept: application/json
+
+###
+
+GET {{api.url}}/Employee
+Accept: application/json
+
+###
+
+POST {{api.url}}/Employee
+Accept: application/json
+Content-Type: application/json
+
+{
+  "firstName": "TestFirstName",
+  "lastName": "TestSecondName",
+  "hireDate": "2024-08-27T06:10:41.783Z",
+  "phone": "123",
+  "address": "Address 1",
+  "avatarUrl": null
+}
+
+###
+
+PUT {{api.url}}/Employee
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": 5,
+  "firstName": "TestFirstNameUpdate",
+  "lastName": "TestSecondName",
+  "hireDate": "2024-08-27T06:10:41.783Z",
+  "phone": "1234",
+  "address": "Address 1",
+  "avatarUrl": null
+}
+
+###
+
+DELETE {{api.url}}/Employee
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": 5
+}
+
+###
+
+GET {{api.url}}/Employee/1
+Accept: application/json
+
+###
+
+POST {{api.url}}/Employee/togglestatus
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": 1,
+  "active": 0
+}
+
+###
+
+POST {{api.url}}/Employee/addtodepartment
+Accept: application/json
+Content-Type: application/json
+
+{
+  "employeeId": 1,
+  "departmentId": 1
+}
+
+###
+
+GET {{api.url}}/History/1
+Accept: application/json
+
+###

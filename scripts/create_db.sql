@@ -5,9 +5,9 @@ DROP TABLE IF EXISTS "departments";
 
 CREATE TABLE "departments" ("id" int IDENTITY(1,1) PRIMARY KEY, "name" text not null, "creationDate" datetime not null, "modificationDate" datetime not null);
 
-CREATE TABLE "employees" ("id" int IDENTITY(1,1) PRIMARY KEY, "active" integer not null, "firstName" text not null, "lastName" text not null, "hireDate" datetime, "phone" text, "address" text, "avatarUrl" text, "creationDate" datetime not null, "modificationDate" datetime not null, "departmentId" integer references "department" ("id") on delete NO ACTION);
+CREATE TABLE "employees" ("id" int IDENTITY(1,1) PRIMARY KEY, "active" integer not null, "firstName" text not null, "lastName" text not null, "hireDate" datetime, "phone" text, "address" text, "avatarUrl" text, "creationDate" datetime not null, "modificationDate" datetime not null, "departmentId" integer references "departments" ("id") on delete NO ACTION);
 
-CREATE TABLE "history" ("id" int IDENTITY(1,1) PRIMARY KEY, "employeeId" integer not null references "employee" ("id") on delete cascade, "departmentId" integer not null references "department" ("id") on delete cascade, "date" datetime not null);
+CREATE TABLE "history" ("id" int IDENTITY(1,1) PRIMARY KEY, "employeeId" integer not null references "employees" ("id") on delete cascade, "departmentId" integer not null references "departments" ("id") on delete cascade, "date" datetime not null);
 
 CREATE INDEX "employee_departmentId_index" on "employees" ("departmentId");
 CREATE INDEX "history_index" on "history" ("employeeId", "departmentId");
