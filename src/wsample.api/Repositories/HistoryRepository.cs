@@ -15,7 +15,7 @@ namespace wsample.api.Repositories
             _context = context;
         }
 
-        public Task<History> CreateHistoryAsync(History newHistory)
+        public async Task<int> CreateHistoryAsync(History newHistory)
         {
             var query = @"
                 INSERT INTO History (EmployeeId, DepartmentId, Date)

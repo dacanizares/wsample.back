@@ -4,6 +4,6 @@ namespace wsample.domain.Infrastructure
 {
     public interface IHistoryRepository
     {
-        public Task<History> CreateHistoryAsync(History newHistory);
+        public Task<int> CreateHistoryAsync(History newHistory);
     }
 }
