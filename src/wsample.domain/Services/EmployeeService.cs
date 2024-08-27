@@ -18,7 +18,7 @@ namespace wsample.domain.Services
             _mediator = mediator;
         }
 
-        public async Task<int?> CreateEmployeeAsync(Employee newEmployee)
+        public async Task<int> CreateEmployeeAsync(Employee newEmployee)
         {
             return await _employeeRepository.CreateEmployeeAsync(newEmployee);
         }
