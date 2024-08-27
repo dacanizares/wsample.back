@@ -23,7 +23,7 @@ namespace wsample.domain.Services
             var storedEmployee = await _employeeRepository.FindEmployeeByIdAsync(employeeId);
             if (storedEmployee == null)
             {
-                return false; // TODO
+                return false;
             }
 
             storedEmployee.Active = active;

@@ -113,6 +113,7 @@ namespace wsample.api.Repositories
             parameters.Add("AvatarUrl", updateEmployee.AvatarUrl, DbType.String);
             parameters.Add("DepartmentId", updateEmployee.DepartmentId, DbType.Int32);
             parameters.Add("ModificationDate", DateTime.UtcNow, DbType.DateTime);
+            parameters.Add("Id", updateEmployee.Id, DbType.Int32);
 
             using (var connection = _context.CreateConnection())
             {
