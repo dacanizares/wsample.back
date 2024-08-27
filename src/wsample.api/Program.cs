@@ -16,7 +16,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<DbContext>();
 
 // Services
-// builder.Services.AddScoped<>();
+builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<IHistoryService, HistoryService>();
 
 // Repositories
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
