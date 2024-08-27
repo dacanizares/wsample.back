@@ -7,6 +7,6 @@ namespace wsample.api.Commands
         [Required]
         public int Id { get; set; }
         [Required]
-        public bool Active { get; set; }
+        public int Active { get; set; }
     }
 }

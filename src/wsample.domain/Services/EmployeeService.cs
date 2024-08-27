@@ -22,7 +22,7 @@ namespace wsample.domain.Services
         {
             return await _employeeRepository.CreateEmployeeAsync(newEmployee);
         }
-        public async Task<bool> ToggleEmployeeStatusAsync(int employeeId, bool active)
+        public async Task<bool> ToggleEmployeeStatusAsync(int employeeId, int active)
         {
             var storedEmployee = await _employeeRepository.FindEmployeeByIdAsync(employeeId);
             if (storedEmployee == null)

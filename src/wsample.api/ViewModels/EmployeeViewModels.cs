@@ -3,7 +3,7 @@
     public class EmployeeViewModel
     {
         public int Id { get; set; }
-        public bool Active { get; set; }
+        public int Active { get; set; }
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public DateTime? HireDate { get; set; }
