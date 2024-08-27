@@ -1,4 +1,6 @@
-﻿using wsample.domain.Infrastructure;
+﻿using MediatR;
+using wsample.domain.Events;
+using wsample.domain.Infrastructure;
 using wsample.domain.Models;
 
 namespace wsample.domain.Services
@@ -7,11 +9,13 @@ namespace wsample.domain.Services
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IDepartmentService _departmentService;
+        private readonly IMediator _mediator;
 
-        public EmployeeService(IEmployeeRepository employeeRepository, IDepartmentService departmentService)
+        public EmployeeService(IEmployeeRepository employeeRepository, IDepartmentService departmentService, IMediator mediator)
         {
             _employeeRepository = employeeRepository;
             _departmentService = departmentService;
+            _mediator = mediator;
         }
 
         public async Task<int?> CreateEmployeeAsync(Employee newEmployee)
@@ -50,7 +54,10 @@ namespace wsample.domain.Services
             }
 
             storedEmployee.DepartmentId = departmentId;
-            //TODO event
+            
+            var onAddedToDepartmentEvent = new OnAddedToDepartmentEvent { EmployeeId = employeeId, DepartmentId = departmentId };
+            await _mediator.Send(onAddedToDepartmentEvent);
+
             await _employeeRepository.UpdateEmployeeAsync(storedEmployee);
             return true;
         }
