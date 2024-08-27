@@ -6,6 +6,8 @@
 
 1. Create a new dabase (named *wsample*) and execute the scripts located under the **scripts/** folder.
    * Run *create_db.sql*
+
+2. Open **wsample.back.sln** on VisualStudio 2022 and run the application!
  
 
 ## Features
