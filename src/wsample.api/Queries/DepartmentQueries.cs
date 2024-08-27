@@ -15,7 +15,7 @@ namespace wsample.api.Queries
             _context = context;            
         }
 
-        public async Task<Response<DepartmentViewModel>> FindDepartmentByIdAsync(int id)
+        public async Task<DepartmentViewModel?> FindDepartmentByIdAsync(int id)
         {
             var query = @"
                 SELECT
@@ -31,16 +31,11 @@ namespace wsample.api.Queries
             using (var connection = _context.CreateConnection())
             {
                 var department = await connection.QueryFirstOrDefaultAsync<DepartmentViewModel>(query, parameters);
-
-                if (department != null)
-                {
-                    return new Response<DepartmentViewModel> { Content = department };
-                }
-                return new Response<DepartmentViewModel> { StatusCode = HttpStatusCode.NotFound };
+                return department;
             }
         }
 
-        public async Task<Response<List<DepartmentViewModel>>> FindDepartmentsAsync()
+        public async Task<List<DepartmentViewModel>> FindDepartmentsAsync()
         {
             var query = @"
                 SELECT
@@ -53,14 +48,10 @@ namespace wsample.api.Queries
 
             using (var connection = _context.CreateConnection())
             {
-                var departments = await connection.QueryAsync<DepartmentViewModel>(query, parameters);
-                var content = departments.ToList();
+                var content = await connection.QueryAsync<DepartmentViewModel>(query, parameters);
+                var departments = content.ToList();
 
-                if (content.Count > 0)
-                {
-                    return new Response<List<DepartmentViewModel>> { Content = content };
-                }
-                return new Response<List<DepartmentViewModel>> { StatusCode = HttpStatusCode.NotFound }; // TODO
+                return departments;
             }
         }
     }

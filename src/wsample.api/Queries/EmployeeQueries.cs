@@ -1,7 +1,6 @@
 ﻿using wsample.api.Context;
 using Dapper;
 using System.Data;
-using System.Net;
 using wsample.api.ViewModels;
 
 namespace wsample.api.Queries
@@ -15,23 +14,23 @@ namespace wsample.api.Queries
             _context = context;            
         }
 
-        public async Task<Response<EmployeeViewModel?>> FindEmployeeByIdAsync(int id)
+        public async Task<EmployeeViewModel?> FindEmployeeByIdAsync(int id)
         {
             var query = @"
                 SELECT
-                    Id,
-                    Active,
-                    FirstName,
-                    LastName,
-                    HireDate,
-                    Phone,
-                    Address,
-                    AvatarUrl,
-                    DepartmentId,
-                    CreationDate,
-                    ModificationDate
-                FROM Employees
-                WHERE Id = @Id
+                    e.Id,
+                    e.Active,
+                    e.FirstName,
+                    e.LastName,
+                    e.HireDate,
+                    e.Phone,
+                    e.Address,
+                    e.AvatarUrl,
+                    e.DepartmentId,
+                    d.Name AS DepartmentName
+                FROM Employees e
+                LEFT JOIN Departments d ON d.Id = e.DepartmentId
+                WHERE e.Id = @Id
             ";
 
             var parameters = new DynamicParameters();
@@ -39,39 +38,36 @@ namespace wsample.api.Queries
 
             using (var connection = _context.CreateConnection())
             {
-                var employee = await connection.QueryFirstOrDefaultAsync<EmployeeViewModel>(query, parameters);
-
-                if (employee != null)
-                {
-                    return new Response<EmployeeViewModel> { Content = employee };
-                }
-                return new Response<EmployeeViewModel> { StatusCode = HttpStatusCode.NotFound };
+                var employee = await connection.QuerySingleOrDefaultAsync<EmployeeViewModel>(query, parameters);
+                return employee;
             }
         }
 
-        public async Task<Response<List<EmployeeViewModel>>> FindDepartmentsAsync()
+        public async Task<List<EmployeeViewModel>> FindEmployeesAsync()
         {
             var query = @"
                 SELECT
-                    Id,
-                    Name,
-                    CreationDate,
-                    ModificationDate
-                FROM Departments
+                    e.Id,
+                    e.Active,
+                    e.FirstName,
+                    e.LastName,
+                    e.HireDate,
+                    e.Phone,
+                    e.Address,
+                    e.AvatarUrl,
+                    e.DepartmentId,
+                    d.Name AS DepartmentName
+                FROM Employees e
+                LEFT JOIN Departments d ON d.Id = e.DepartmentId
             ";
 
             var parameters = new DynamicParameters();
 
             using (var connection = _context.CreateConnection())
             {
-                var employees = await connection.QueryAsync<EmployeeViewModel>(query, parameters);
-                var content = employees.ToList();
-
-                if (content.Count > 0)
-                {
-                    return new Response<List<EmployeeViewModel>> { Content = content };
-                }
-                return new Response<List<EmployeeViewModel>> { StatusCode = HttpStatusCode.NotFound };
+                var content = await connection.QueryAsync<EmployeeViewModel>(query, parameters);
+                var employees = content.ToList();
+                return employees;
             }
         }
     }

@@ -2,8 +2,6 @@
 using wsample.api.ViewModels;
 using Dapper;
 using System.Data;
-using System.Net;
-using wsample.domain.Models;
 
 namespace wsample.api.Queries
 {
@@ -16,7 +14,7 @@ namespace wsample.api.Queries
             _context = context;            
         }
 
-        public async Task<Response<Department>> FindHistoryByEmployeeIdAsync(int employeeId)
+        public async Task<List<HistoryViewModel>> FindHistoryByEmployeeIdAsync(int employeeId)
         {
             var query = @"
                 SELECT
@@ -35,14 +33,10 @@ namespace wsample.api.Queries
 
             using (var connection = _context.CreateConnection())
             {
-                var histories = await connection.QueryAsync<Department>(query, parameters);
-                var content = histories.ToList();
+                var content = await connection.QueryAsync<HistoryViewModel>(query, parameters);
+                var histories = content.ToList();
 
-                if (content.Count > 0)
-                {
-                    return new Response<Department> { Content = content };
-                }
-                return new Response<Department> { StatusCode = HttpStatusCode.NotFound };
+                return histories;
             }
         }
     }
