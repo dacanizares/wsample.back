@@ -6,9 +6,9 @@ namespace wsample.domain.Services
     public class EmployeeService : IEmployeeService
     {
         private readonly IEmployeeRepository _employeeRepository;
-        private readonly DepartmentService _departmentService;
+        private readonly IDepartmentService _departmentService;
 
-        public EmployeeService(IEmployeeRepository employeeRepository, DepartmentService departmentService)
+        public EmployeeService(IEmployeeRepository employeeRepository, IDepartmentService departmentService)
         {
             _employeeRepository = employeeRepository;
             _departmentService = departmentService;
