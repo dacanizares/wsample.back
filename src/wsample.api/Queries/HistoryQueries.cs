@@ -5,13 +5,13 @@ using System.Data;
 
 namespace wsample.api.Queries
 {
-    public class HistoryQueries
+    public class HistoryQueries : IHistoryQueries
     {
         private readonly DbContext _context;
 
         public HistoryQueries(DbContext context)
         {
-            _context = context;            
+            _context = context;
         }
 
         public async Task<List<HistoryViewModel>> FindHistoryByEmployeeIdAsync(int employeeId)

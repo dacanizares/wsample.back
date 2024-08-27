@@ -6,13 +6,13 @@ using wsample.api.ViewModels;
 
 namespace wsample.api.Queries
 {
-    public class DepartmentQueries
+    public class DepartmentQueries : IDepartmentQueries
     {
         private readonly DbContext _context;
 
         public DepartmentQueries(DbContext context)
         {
-            _context = context;            
+            _context = context;
         }
 
         public async Task<DepartmentViewModel?> FindDepartmentByIdAsync(int id)

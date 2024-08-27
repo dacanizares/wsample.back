@@ -5,13 +5,13 @@ using wsample.api.ViewModels;
 
 namespace wsample.api.Queries
 {
-    public class EmployeeQueries
+    public class EmployeeQueries : IEmployeeQueries
     {
         private readonly DbContext _context;
 
         public EmployeeQueries(DbContext context)
         {
-            _context = context;            
+            _context = context;
         }
 
         public async Task<EmployeeViewModel?> FindEmployeeByIdAsync(int id)
