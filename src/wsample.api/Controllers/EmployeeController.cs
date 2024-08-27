@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using wsample.api.Commands;
 using wsample.api.Queries;
@@ -48,6 +46,7 @@ namespace wsample.api.Controllers
 
         [HttpPost]
         [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         public async Task<ActionResult<IEnumerable<EmployeeViewModel>>> CreateEmployee(CreateEmployeeCommand command)
         {
             if (!ModelState.IsValid)
@@ -57,16 +56,14 @@ namespace wsample.api.Controllers
 
             Employee newEmployee = _mapper.Map<Employee>(command);
             var newId = await _service.CreateEmployeeAsync(newEmployee);
-            if (newId is null)
-            {
-                return StatusCode(500);
-            }
             
             return Ok(await _queries.FindEmployeeByIdAsync((int)newId));
         }
 
         [HttpPost("togglestatus")]
         [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult<IEnumerable<EmployeeViewModel>>> ToggleStatus(ToggleEmployeeStatusCommand command)
         {
             if (!ModelState.IsValid)
@@ -85,6 +82,8 @@ namespace wsample.api.Controllers
 
         [HttpPost("addtodepartment")]
         [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult<IEnumerable<EmployeeViewModel>>> AddToDepartment(AddEmployeeToDepartmentCommand command)
         {
             if (!ModelState.IsValid)
@@ -103,6 +102,8 @@ namespace wsample.api.Controllers
 
         [HttpPut]
         [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult<IEnumerable<EmployeeViewModel>>> UpdateEmployee(UpdateEmployeeCommand command)
         {
             if (!ModelState.IsValid)
@@ -122,6 +123,7 @@ namespace wsample.api.Controllers
 
         [HttpDelete]
         [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         public async Task<ActionResult<IEnumerable<EmployeeViewModel>>> DeleteEmployee(DeleteEmployeeCommand command)
         {
             if (!ModelState.IsValid)

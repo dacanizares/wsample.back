@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using wsample.api.Queries;
 using wsample.api.ViewModels;
-using wsample.domain.Models;
-using wsample.domain.Services;
 
 namespace wsample.api.Controllers
 {
