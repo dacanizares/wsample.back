@@ -4,39 +4,19 @@
 
 ## Quick start
 
-1. Install dependencies.
-   ```sh
-   npm install
-   ```
+1. Create a new dabase (named *wsample*) and execute the scripts located under the **scripts/** folder.
+   * Run *create_db.sql*
  
-2. Execute migrations:
-   ```sh
-   npm run migrate
-   ```
-
-3. Run!
-   ```sh
-   npm start
-   ```
-
-4. Run tests (WARNING!: This step deletes local db and re-runs migrations):
-   ```sh
-   npm test
-   ```
 
 ## Features
 
 - DDD-like structure (not purely DDD because of time constraints).
   - Domain events.
-  - Simple DI.
 - CQRS.
-- Lightweight data access using Kysely + SQLite.
+- Lightweight data access using Dapper.
 - ViewModels to prevent exposing data from the server.
-- Generic validators and mappers, checking information cosistency and protecting from over-posting attacks.
-- Included http examples (check *test/* folder).
-- Included functional tests.
-- Standard security measures (check *src/app.ts*)
-- Fast development iteration with hot reloading.
+- Included http examples.
+- Swagger.
 
 ## Recommended VSCode extensions
 
