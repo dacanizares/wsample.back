@@ -8,14 +8,14 @@ using wsample.api.ViewModels;
 
 namespace wsample.test
 {
-    public class DepartmentFunctionalTests :
+    public class EmployeeFunctionalTests :
         IClassFixture<CustomWebApplicationFactory<Program>>
     {
         private readonly HttpClient _client;
         private readonly CustomWebApplicationFactory<Program>
             _factory;
 
-        public DepartmentFunctionalTests(
+        public EmployeeFunctionalTests(
             CustomWebApplicationFactory<Program> factory)
         {
             _factory = factory;
