@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using wsample.api.Commands;
+using wsample.api.Queries;
 using wsample.api.ViewModels;
 using wsample.domain.Models;
+using wsample.domain.Services;
 
 namespace wsample.api.Controllers
 {
@@ -11,55 +14,123 @@ namespace wsample.api.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
+        private readonly IEmployeeQueries _queries;
+        private readonly IEmployeeService _service;
+        private readonly IMapper _mapper;
+
+        public EmployeeController(IEmployeeQueries queries, IEmployeeService service, IMapper mapper)
+        {
+            _queries = queries;
+            _service = service;
+            _mapper = mapper;
+        }
+
 
         [HttpGet]
         [ProducesResponseType(200)]
         public async Task<ActionResult<IEnumerable<EmployeeViewModel>>> GetAll()
         {
-            return NoContent();
+            return await _queries.FindEmployeesAsync();
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<EmployeeViewModel>> GetByIdAsync(string id)
+        public async Task<ActionResult<EmployeeViewModel>> GetByIdAsync(int id)
         {
-            return NoContent();
+            var result = await _queries.FindEmployeeByIdAsync(id);
+            if (result is null)
+            { 
+                return NotFound();
+            }
+            return Ok(result);
         }
 
         [HttpPost]
         [ProducesResponseType(200)]
         public async Task<ActionResult<IEnumerable<EmployeeViewModel>>> CreateEmployee(CreateEmployeeCommand command)
         {
-            return NoContent();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            Employee newEmployee = _mapper.Map<Employee>(command);
+            var newId = await _service.CreateEmployeeAsync(newEmployee);
+            if (newId is null)
+            {
+                return StatusCode(500);
+            }
+            
+            return Ok(await _queries.FindEmployeeByIdAsync((int)newId));
         }
 
         [HttpPost("togglestatus")]
         [ProducesResponseType(200)]
         public async Task<ActionResult<IEnumerable<EmployeeViewModel>>> ToggleStatus(ToggleEmployeeStatusCommand command)
         {
-            return NoContent();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var result = await _service.ToggleEmployeeStatusAsync(command.Id, command.Active);
+            if (!result)
+            {
+                return NotFound();
+            }
+
+            return Ok(await _queries.FindEmployeeByIdAsync(command.Id));
         }
 
         [HttpPost("addtodepartment")]
         [ProducesResponseType(200)]
         public async Task<ActionResult<IEnumerable<EmployeeViewModel>>> AddToDepartment(AddEmployeeToDepartmentCommand command)
         {
-            return NoContent();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var result = await _service.AddEmployeeToDepartmentAsync(command.EmployeeId, command.DepartmentId);
+            if (!result)
+            {
+                return NotFound();
+            }
+
+            return Ok(await _queries.FindEmployeeByIdAsync(command.EmployeeId));
         }
 
         [HttpPut]
         [ProducesResponseType(200)]
         public async Task<ActionResult<IEnumerable<EmployeeViewModel>>> UpdateEmployee(UpdateEmployeeCommand command)
         {
-            return NoContent();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            Employee updatedEmployee = _mapper.Map<Employee>(command);
+            var result = await _service.UpdateEmployeeAsync(updatedEmployee);
+            if (!result)
+            {
+                return NotFound();
+            }
+
+            return Ok(await _queries.FindEmployeeByIdAsync(command.Id));
         }
 
         [HttpDelete]
         [ProducesResponseType(200)]
         public async Task<ActionResult<IEnumerable<EmployeeViewModel>>> DeleteEmployee(DeleteEmployeeCommand command)
         {
-            return NoContent();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            await _service.DeleteEmployeeAsync(command.Id);
+            return Ok();
         }
     }
 }
