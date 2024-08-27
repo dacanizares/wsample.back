@@ -1,4 +1,4 @@
-# sem.backend
+# wsample.back
 
 ![Diagram](.assets/diagram.png)
 
