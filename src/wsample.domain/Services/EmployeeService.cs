@@ -3,7 +3,7 @@ using wsample.domain.Models;
 
 namespace wsample.domain.Services
 {
-    public class EmployeeService
+    public class EmployeeService : IEmployeeService
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly DepartmentService _departmentService;
@@ -57,7 +57,7 @@ namespace wsample.domain.Services
         public async Task<bool> UpdateEmployeeAsync(Employee updateEmployee)
         {
             var storedEmployee = await _employeeRepository.FindEmployeeByIdAsync(updateEmployee.Id);
-            if (storedEmployee == null) 
+            if (storedEmployee == null)
             {
                 return false;
             }
