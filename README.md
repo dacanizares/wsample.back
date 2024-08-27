@@ -14,10 +14,12 @@
 
 - DDD-like structure (not purely DDD because of time constraints).
   - Domain events.
+  - Mediatr.
 - CQRS.
 - Lightweight data access using Dapper.
 - ViewModels to prevent exposing data from the server.
 - Included http examples.
+- Sample unit and functional tests.
 - Swagger.
 
 ## Recommended VSCode extensions
