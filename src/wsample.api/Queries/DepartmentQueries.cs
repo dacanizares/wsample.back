@@ -1,7 +1,6 @@
 ﻿using wsample.api.Context;
 using Dapper;
 using System.Data;
-using System.Net;
 using wsample.api.ViewModels;
 
 namespace wsample.api.Queries
@@ -20,7 +19,7 @@ namespace wsample.api.Queries
             var query = @"
                 SELECT
                     Id,
-                    Name,
+                    Name
                 FROM Departments
                 WHERE Id = @Id
             ";
