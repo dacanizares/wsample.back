@@ -8,14 +8,14 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CD446556-04B8-4936-9F95-B068501AC073}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wsample.domain", "src\wsample.domain\wsample.domain.csproj", "{D88A7E61-22A6-4C64-A33E-109BDB0ECC2E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{E1CA4A9C-C7BC-4F12-98E1-B17FA5A79D16}"
 	ProjectSection(SolutionItems) = preProject
-		scripts\create_books_table.sql = scripts\create_books_table.sql
-		scripts\data_test.sql = scripts\data_test.sql
+		scripts\create_db.sql = scripts\create_db.sql
 	EndProjectSection
 EndProject
 Global
