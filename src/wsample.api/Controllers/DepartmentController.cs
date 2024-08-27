@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using wsample.api.ViewModels;
 using wsample.domain.Models;
 
 namespace wsample.api.Controllers
@@ -10,9 +12,17 @@ namespace wsample.api.Controllers
     {
         [HttpGet]
         [ProducesResponseType(200)]
-        public async Task<ActionResult> GetAll()
+        public async Task<ActionResult<IEnumerable<DepartmentViewModel>>> GetAll()
         {
-            return Ok("OK");
+            return NoContent();
+        }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<DepartmentViewModel>> GetByIdAsync(string id)
+        {
+            return NoContent();
         }
     }
 }
