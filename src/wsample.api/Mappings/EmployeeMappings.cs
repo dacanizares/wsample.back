@@ -10,11 +10,9 @@ namespace booklibrary.api.Mappings
         {
             CreateMap<Employee, CreateEmployeeCommand>();
             CreateMap<Employee, UpdateEmployeeCommand>();
-            CreateMap<Employee, DeleteEmployeeCommand>();
 
             CreateMap<CreateEmployeeCommand, Employee>();
             CreateMap<UpdateEmployeeCommand, Employee>();
-            CreateMap<DeleteEmployeeCommand, Employee>();
         }
     }
 }
