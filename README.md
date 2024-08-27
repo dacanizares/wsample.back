@@ -4,6 +4,8 @@
 
 ## Quick start
 
+> This project is also available for **node.js**, check other branches for more info.
+
 1. Create a new dabase (named *wsample*) and execute the scripts located under the **scripts/** folder.
    * Run *create_db.sql*
 
@@ -21,8 +23,3 @@
 - Included http examples.
 - Sample unit and functional tests.
 - Swagger.
-
-## Recommended VSCode extensions
-
-* [SQLite Viewer](https://open-vsx.org/vscode/item?itemName=qwtel.sqlite-viewer) to inspect *sqlite* database files.
-* [REST Client](https://open-vsx.org/vscode/item?itemName=humao.rest-client) to run .http files located under *test/* folder
