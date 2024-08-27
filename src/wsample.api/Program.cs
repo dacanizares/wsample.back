@@ -26,9 +26,9 @@ builder.Services.AddScoped<IHistoryRepository, HistoryRepository>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 
 // Queries
-builder.Services.AddScoped<EmployeeQueries>();
-builder.Services.AddScoped<HistoryQueries>();
-builder.Services.AddScoped<DepartmentQueries>();
+builder.Services.AddScoped<IEmployeeQueries, EmployeeQueries>();
+builder.Services.AddScoped<IHistoryQueries, HistoryQueries>();
+builder.Services.AddScoped<IDepartmentQueries, DepartmentQueries>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 
