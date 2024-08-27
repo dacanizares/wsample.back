@@ -32,7 +32,7 @@ namespace wsample.api.Repositories
             {
                 var id = await connection.ExecuteScalarAsync<int>(query, parameters);
 
-                return id; //TODO
+                return id;
             }
         }
     }

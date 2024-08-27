@@ -71,16 +71,13 @@ namespace wsample.domain.Services
             {
                 return false;
             }
-            //TODO map update and stored
-            //updateEmployee.Active ??= storedEmployee.Active;
             updateEmployee.FirstName ??= storedEmployee.FirstName;
             updateEmployee.LastName ??= storedEmployee.LastName;
             updateEmployee.HireDate ??= storedEmployee.HireDate;
             updateEmployee.Phone ??= storedEmployee.Phone;
             updateEmployee.Address ??= storedEmployee.Address;
             updateEmployee.AvatarUrl ??= storedEmployee.AvatarUrl;
-            //updateEmployee.DepartmentId ??= storedEmployee.DepartmentId;
-
+            
             await _employeeRepository.UpdateEmployeeAsync(updateEmployee);
             return true;
         }
