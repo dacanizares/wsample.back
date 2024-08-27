@@ -3,6 +3,7 @@ using wsample.api.Queries;
 using wsample.api.Repositories;
 using wsample.domain.Services;
 using wsample.domain.Infrastructure;
+using wsample.domain.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +32,11 @@ builder.Services.AddScoped<IHistoryQueries, HistoryQueries>();
 builder.Services.AddScoped<IDepartmentQueries, DepartmentQueries>();
 
 builder.Services.AddAutoMapper(typeof(Program));
+
+// Mediatr
+builder.Services.AddMediatR(cfg => {
+    cfg.RegisterServicesFromAssembly(typeof(Department).Assembly);
+});
 
 var app = builder.Build();
 
